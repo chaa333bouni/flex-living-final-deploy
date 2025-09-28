@@ -3,14 +3,21 @@ const cors = require('cors');
 const fs = require('fs');
 const app = express();
 const PORT = 3001;
+const path = require('path');
 
 // --- Configuration ---
 app.use(cors()); 
 app.use(express.json()); 
 
 // --- Data management ---
-const initialReviews = require('./mockReviews.json');
-const mockGoogleApiResponse = require('./mockGoogleApiResponse.json');
+// On construit un chemin fiable vers le fichier JSON
+const initialReviewsPath = path.join(process.cwd(), 'api', 'mockReviews.json');
+const initialReviews = require(initialReviewsPath);
+
+// On construit un chemin fiable vers le fichier JSON
+const googleApiMockPath = path.join(process.cwd(), 'api', 'mockGoogleApiResponse.json');
+const googleApiMock = require(googleApiMockPath);
+
 let reviews = initialReviews.result.map(review => {
   const totalRating = review.reviewCategory.reduce((sum, cat) => sum + cat.rating, 0);
   const averageRating = totalRating / review.reviewCategory.length;
