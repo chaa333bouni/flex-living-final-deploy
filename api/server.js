@@ -10,7 +10,10 @@ app.use(express.json());
 // On charge les fichiers JSON directement. Vercel les trouvera grâce à vercel.json.
 const initialReviews = require('./mockReviews.json');
 const googleApiMock = require('./mockGoogleApiResponse.json');
-
+const PORT = process.env.PORT || 3001; // Utilise le port de Vercel ou 3001 en local
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 let reviews = initialReviews.result.map(review => {
   const totalRating = review.reviewCategory.reduce((sum, cat) => sum + cat.rating, 0);
   const averageRating = totalRating / review.reviewCategory.length;

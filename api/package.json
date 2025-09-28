@@ -2,9 +2,7 @@
   "name": "flex-backend",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  
   
   "keywords": [],
   "author": "",
@@ -14,5 +12,13 @@
     "axios": "^1.12.2",
     "cors": "^2.8.5",
     "express": "^5.1.0"
-  }
+  },
+"scripts": {
+  "ng": "ng",
+  "start": "node api/server.js", 
+  "build": "ng build",
+  "watch": "ng build --watch --configuration development",
+  "test": "ng test"
+}
+
 }
