@@ -3,12 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node api/server.js",
-    "dev": "ng serve",
-    "build": "ng build --configuration production",
+    "start": "ng serve",
+    "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "postbuild": "node -e \"console.log('Build completed')\""
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
@@ -23,8 +21,7 @@
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "cors": "^2.8.5",
-    "express": "^5.1.0",
-    "axios": "^1.12.2",
+    "express": "^4.19.2",
     "zone.js": "~0.14.3"
   },
   "devDependencies": {
@@ -39,8 +36,5 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.5.2"
-  },
-  "engines": {
-    "node": "18.x"
   }
 }

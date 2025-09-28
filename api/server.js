@@ -1,18 +1,15 @@
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs');
-const path = require('path');
+const fs = require('fs'); // <--- NOUVEAU : On importe le module 'fs'
+const path = require('path'); // <--- NOUVEAU : On importe le module 'path'
 const app = express();
 
 // --- Configuration ---
 app.use(cors()); 
 app.use(express.json()); 
 
-// Serve static files from Angular build
-app.use(express.static(path.join(process.cwd(), 'dist', 'flex-living-dashboard')));
-
 // --- Data Management ---
-// Read JSON files reliably with fs and path
+// On lit les fichiers JSON de manière fiable avec fs et path
 const reviewsPath = path.join(process.cwd(), 'api', 'mockReviews.json');
 const initialReviewsData = JSON.parse(fs.readFileSync(reviewsPath, 'utf-8'));
 
@@ -40,7 +37,8 @@ let reviews = initialReviewsData.result.map(review => {
   };
 });
 
-// --- API Routes ---
+// --- Routes API ---
+// (Toutes vos routes API restent exactement les mêmes, pas besoin de les copier ici)
 app.get('/api/google-reviews/:listingName', (req, res) => {
   const listingName = req.params.listingName;
   const apiResponse = googleApiMock[listingName];
@@ -92,23 +90,10 @@ app.get('/api/showcase-properties', (req, res) => {
     });
     res.json(propertiesWithImages);
   } catch (error) {
-    console.error('Error in showcase-properties:', error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Erreur interne du serveur" });
   }
 });
 
-// Handle Angular routes - must be last
-app.get('*', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'dist', 'flex-living-dashboard', 'index.html'));
-});
 
-const PORT = process.env.PORT || 3000;
-
-// For Vercel, export the app
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
-
+// Exporte l'application pour Vercel
 module.exports = app;

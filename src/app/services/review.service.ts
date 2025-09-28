@@ -43,7 +43,8 @@ export interface GoogleReview {
   providedIn: 'root'
 })
 export class ReviewService {
-
+// Changez ceci :
+// private apiUrl = 'http://localhost:3001/api';
 
 // En ceci :
 private apiUrl = '/api';
