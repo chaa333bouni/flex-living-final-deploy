@@ -1,0 +1,26 @@
+<nav style="background-color: #2a4e45; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center;">
+  
+  <!-- Titre de la marque, toujours visible -->
+  <a routerLink="/" class="navbar-brand" style="color: white; text-decoration: none; font-size: 1.5em; font-weight: bold;">
+    the flex.
+  </a>
+
+  <!-- ========================================================== -->
+  <!-- LIEN DYNAMIQUE QUI CHANGE EN FONCTION DE LA PAGE -->
+  <!-- ========================================================== -->
+
+  <div *ngIf="isOnDashboard">
+    <a routerLink="/showcase" class="nav-link" style="color: white; text-decoration: none; font-size: 1.1em; background-color: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 5px;">
+      Public review page →
+    </a>
+  </div>
+
+  <div *ngIf="!isOnDashboard">
+    <a routerLink="/dashboard" class="nav-link" style="color: white; text-decoration: none; font-size: 1.1em; background-color: rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 5px;">
+      ← Manager dashboard
+    </a>
+  </div>
+
+</nav>
+
+<router-outlet></router-outlet>

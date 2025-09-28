@@ -1,0 +1,122 @@
+/*
+  Style inspiré par la charte graphique de theflex.
+  Couleurs :
+  - Arrière-plan : #fdfbf7 (beige/crème clair)
+  - Texte principal : #1a1a1a (quasi-noir)
+  - Texte secondaire : #555 (gris)
+  - Accentuation (header) : #2a4e45 (vert-canard foncé)
+*/
+
+/* On applique la couleur de fond générale au conteneur de la page */
+:host {
+  display: block;
+  background-color: #fdfbf7;
+  min-height: 100vh; /* Assure que le fond couvre tout l'écran */
+}
+
+.page-container {
+  padding: 40px 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  max-width: 900px;
+  margin: 0 auto;
+  color: #1a1a1a;
+}
+
+/* --- En-tête de la propriété --- */
+.property-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.property-header h1 {
+  font-size: 2.8em;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.property-description {
+  font-size: 1.1em;
+  color: #555;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* --- Section des avis --- */
+.reviews-section h2 {
+  font-size: 2em;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* --- Le style des cartes d'avis, inspiré de l'image --- */
+.review-card {
+  background-color: #ffffff; /* Fond blanc pur pour la carte */
+  border: 1px solid #e9ecef;
+  border-radius: 16px; /* Coins très arrondis, comme sur l'image */
+  padding: 25px 30px;
+  margin-bottom: 25px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07); /* Ombre subtile */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.review-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.review-rating {
+  font-weight: 700;
+  font-size: 1.1em;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.review-text {
+  font-style: italic;
+  font-size: 1.2em;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  color: #1a1a1a;
+}
+
+.review-author {
+  text-align: right;
+  color: #555;
+  font-weight: 600;
+}
+
+/* --- Message If no notice founded --- */
+.no-reviews-message {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+  color: #6c757d;
+  border: 1px dashed #ccc;
+}
+
+/* --- navigation bar(simulated) --- */
+.navbar {
+  background-color: #2a4e45; 
+  padding: 15px 30px;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5em;
+  color: white;
+  text-decoration: none;
+}
+
+.navbar-link {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+}

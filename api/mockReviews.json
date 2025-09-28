@@ -1,0 +1,50 @@
+{
+  "status": "success",
+  "result": [
+    {
+      "id": 7453,
+      "type": "host-to-guest",
+      "status": "published",
+      "rating": null,
+      "publicReview": "Shane and family are wonderful! Would definitely host again :)",
+      "reviewCategory": [
+        {"category": "cleanliness", "rating": 10},
+        {"category": "communication", "rating": 10},
+        {"category": "respect_house_rules", "rating": 10}
+      ],
+      "submittedAt": "2020-08-21 22:45:14",
+      "guestName": "Shane Finkelstein",
+      "listingName": "2B N1 A - 29 Shoreditch Heights"
+    },
+    {
+      "id": 7454,
+      "type": "guest-to-host",
+      "status": "published",
+      "rating": null,
+      "publicReview": "The apartment was clean and comfortable.",
+      "reviewCategory": [
+        {"category": "cleanliness", "rating": 9},
+        {"category": "communication", "rating": 8},
+        {"category": "respect_house_rules", "rating": 9}
+      ],
+      "submittedAt": "2020-08-22 10:15:30",
+      "guestName": "Laura Martinez",
+      "listingName": "3C N2 B - 14 Maple Street"
+    },
+    {
+      "id": 7455,
+      "type": "host-to-guest",
+      "status": "published",
+      "rating": null,
+      "publicReview": "Very polite and easy to communicate with.",
+      "reviewCategory": [
+        {"category": "cleanliness", "rating": 8},
+        {"category": "communication", "rating": 10},
+        {"category": "respect_house_rules", "rating": 10}
+      ],
+      "submittedAt": "2020-08-23 14:20:00",
+      "guestName": "David Kim",
+      "listingName": "1A N1 C - 50 Oak Avenue"
+    }
+  ]
+}

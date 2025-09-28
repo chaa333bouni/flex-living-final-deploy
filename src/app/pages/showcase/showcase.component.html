@@ -1,0 +1,24 @@
+<div class="page-container">
+  <div class="showcase-header">
+    <h1>Our Featured Properties</h1>
+    <p>Discover the properties our customers love.</p>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-message">loading...</div>
+
+  <div *ngIf="!isLoading">
+    <div *ngIf="properties.length > 0; else noProperties" class="properties-grid">
+      <!-- On boucle sur chaque propriété ayant un avis approuvé -->
+      <a *ngFor="let prop of properties" [routerLink]="['/property', prop.listingName]" class="property-card">
+        <img [src]="prop.imageUrl" alt="Image de {{ prop.listingName }}">
+        <div class="card-content">
+          <h3>{{ prop.listingName }}</h3>
+          <p>See reviews →</p>
+        </div>
+      </a>
+    </div>
+    <ng-template #noProperties>
+      <p class="no-reviews-message">No properties have approved reviews yet.</p>
+    </ng-template>
+  </div>
+</div>

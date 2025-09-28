@@ -1,0 +1,46 @@
+{
+  "2B N1 A - 29 Shoreditch Heights": {
+    "result": {
+      "reviews": [
+        {
+          "author_name": "Alice Johnson",
+          "profile_photo_url": "https://i.pravatar.cc/150?u=alice",
+          "rating": 5,
+          "relative_time_description": "il y a une semaine",
+          "text": "Absolutely stunning apartment with a great view. The location is perfect, right in the heart of Shoreditch. Highly recommended!",
+          "time": 1663584000
+        },
+        {
+          "author_name": "Markus Weber",
+          "profile_photo_url": "https://i.pravatar.cc/150?u=markus",
+          "rating": 4,
+          "text": "Very clean and modern. The check-in process was smooth. Lost one star because the street can be a bit noisy at night.",
+          "relative_time_description": "il y a 2 mois",
+          "time": 1658227200
+        }
+      ]
+    },
+    "status": "OK"
+  },
+  "1A N1 C - 50 Oak Avenue": {
+    "result": {
+      "reviews": [
+        {
+          "author_name": "Kenji Tanaka",
+          "profile_photo_url": "https://i.pravatar.cc/150?u=kenji",
+          "rating": 5,
+          "text": "Wonderful experience. The property is beautiful and very well-maintained. A peaceful retreat. Five stars without a doubt.",
+          "relative_time_description": "il y a un mois",
+          "time": 1660905600
+        }
+      ]
+    },
+    "status": "OK"
+  },
+  "default": {
+    "result": {
+      "reviews": []
+    },
+    "status": "ZERO_RESULTS"
+  }
+}

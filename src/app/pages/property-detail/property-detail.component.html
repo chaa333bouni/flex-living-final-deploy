@@ -1,0 +1,87 @@
+<!-- Barre de navigation simulée -->
+
+
+<div class="page-container">
+
+  <div *ngIf="listingName" class="property-header">
+    <h1>{{ listingName }}</h1>
+    <p class="property-description">
+     Welcome to this magnificent property. Discover below what our guests thought of their stay, whether via our platform or on Google.
+    </p>
+  </div>
+
+  <!-- Error message if there is no namename  -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- SECTION 1 : Hostway notice (INTERNES) -->
+  <!-- ================================================================= -->
+  <div class="reviews-section">
+    <h2>Reviews from our community</h2>
+
+    <div *ngIf="isLoadingHostaway" class="loading-message">
+      <p>Loading reviews from our community...</p>
+    </div>
+
+    <div *ngIf="!isLoadingHostaway">
+
+      <div *ngIf="publicReviews.length > 0; else noHostawayReviews">
+        <div *ngFor="let review of publicReviews" class="review-card">
+          <div class="review-rating">
+            ⭐ {{ review.overallRating }} / 10
+          </div>
+          <p class="review-text">"{{ review.publicReview }}"</p>
+          <p class="review-author">- {{ review.guestName }}</p>
+        </div>
+      </div>
+
+      <ng-template #noHostawayReviews>
+        <div class="no-reviews-message">
+          <p>There are no reviews from our community for this property yet.</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- SECTION 2 :  GOOGLE Notices (Simulated) -->
+  <!-- ================================================================= -->
+  <div class="reviews-section">
+    <h2>Google Reviews (Simulation)</h2>
+
+    <div *ngIf="isLoadingGoogle" class="loading-message">
+      <p>Loading Google reviews...</p>
+    </div>
+
+    <div *ngIf="!isLoadingGoogle">
+
+      <div *ngIf="googleReviews.length > 0; else noGoogleReviews">
+        <div *ngFor="let review of googleReviews" class="google-review-card">
+          <div class="author-info">
+            <img [src]="review.profile_photo_url" alt="Photo de {{ review.author_name }}" class="profile-pic">
+            <div>
+              <span class="author-name">{{ review.author_name }}</span>
+              <span class="review-time">{{ review.relative_time_description }}</span>
+            </div>
+          </div>
+          <div class="review-rating">
+
+            <span *ngFor="let i of [].constructor(review.rating)">⭐</span>
+
+            <span *ngFor="let i of [].constructor(5 - review.rating)" class="empty-star">☆</span>
+          </div>
+          <p class="review-text">"{{ review.text }}"</p>
+        </div>
+      </div>
+
+      <ng-template #noGoogleReviews>
+        <div class="no-reviews-message">
+          <p>No Google reviews were found for this property..</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+</div>

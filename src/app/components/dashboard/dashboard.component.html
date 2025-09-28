@@ -1,0 +1,92 @@
+<div style="padding: 20px; font-family: Arial, sans-serif;">
+  <h2 style="color: #333;">Reviews Dashboard</h2>
+
+  <!-- FILTERS SECTION -->
+  <div style="padding: 15px; background-color: #f8f9fa; border: 1px solid #dee2e6; margin-bottom: 20px; border-radius: 8px; display: flex; align-items: center; gap: 20px;">
+    
+    <div>
+      <label for="listing-filter" style="margin-right: 5px; font-weight: bold; color: #555;">Filter by property :</label>
+      <select
+        id="listing-filter"
+        [(ngModel)]="selectedListing"
+        (change)="refreshDisplayedReviews()"
+        style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;"
+      >
+        <option value="">All properties</option>
+        <option *ngFor="let listing of uniqueListings" [value]="listing">
+          {{ listing }}
+        </option>
+      </select>
+    </div>
+
+    <button 
+      (click)="resetFilters()" 
+      style="padding: 8px 12px; border: none; background-color: #6c757d; color: white; border-radius: 4px; cursor: pointer;"
+    >
+      Reset filters
+    </button>
+  </div>
+
+  <!-- NO REVIEWS MESSAGE -->
+  <div *ngIf="filteredReviews.length === 0" style="text-align: center; padding: 40px; background-color: #fff; border: 1px solid #dee2e6; border-radius: 8px;">
+    <p style="color: #6c757d; font-size: 1.1em;">No reviews match your search criteria.</p>
+  </div>
+
+  <!-- REVIEWS TABLE -->
+  <table *ngIf="filteredReviews.length > 0" style="width: 100%; border-collapse: collapse; text-align: left; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <thead style="background-color: #e9ecef;">
+      <tr>
+        <th style="padding: 12px;">Property</th>
+        <th style="padding: 12px; cursor: pointer;" (click)="setSortKey('overallRating')">
+          Global Note
+          <span *ngIf="sortKey === 'overallRating'">{{ sortDirection === 'desc' ? '▼' : '▲' }}</span>
+        </th>
+        <th style="padding: 12px;">Client</th>
+        <th style="padding: 12px;">Notice</th>
+        <th style="padding: 12px; cursor: pointer;" (click)="setSortKey('submittedAt')">
+          Date
+          <span *ngIf="sortKey === 'submittedAt'">{{ sortDirection === 'desc' ? '▼' : '▲' }}</span>
+        </th>
+        <th style="padding: 12px;">Status</th>
+        <th style="padding: 12px; text-align: center;">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let review of filteredReviews" style="border-bottom: 1px solid #dee2e6;">
+        
+        <!-- FIXED: Property name link with proper URL encoding -->
+        <td style="padding: 12px;">
+          <a 
+            [routerLink]="['/property', encodeURIComponent(review.listingName)]" 
+            style="color: #0056b3; text-decoration: none; font-weight: bold;"
+            title="Voir la page publique pour {{ review.listingName }}"
+          >
+            {{ review.listingName }}
+          </a>
+        </td>
+        
+        <td style="padding: 12px; font-weight: bold;">{{ review.overallRating }} / 10</td>
+        <td style="padding: 12px;">{{ review.guestName }}</td>
+        <td style="padding: 12px; max-width: 300px;">{{ review.publicReview }}</td>
+        <td style="padding: 12px;">{{ review.submittedAt | date: 'dd/MM/yyyy' }}</td>
+        <td style="padding: 12px;">
+          <span 
+            [style.color]="review.isApproved ? '#28a745' : '#fd7e14'"
+            style="font-weight: bold;"
+          >
+            {{ review.isApproved ? 'Approved' : 'On hold' }}
+          </span>
+        </td>
+        <td style="padding: 12px; text-align: center;">
+          <button 
+            (click)="toggleApproval(review)"
+            [style.backgroundColor]="review.isApproved ? '#dc3545' : '#28a745'"
+            style="padding: 6px 12px; border: none; color: white; border-radius: 4px; cursor: pointer; min-width: 110px;"
+          >
+            {{ review.isApproved ? 'Desapproved' : 'Approved' }}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
