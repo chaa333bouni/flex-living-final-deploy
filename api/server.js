@@ -1,22 +1,15 @@
 const express = require('express');
 const cors = require('cors');
-const fs = require('fs');
 const app = express();
-const PORT = 3001;
-const path = require('path');
 
 // --- Configuration ---
 app.use(cors()); 
 app.use(express.json()); 
 
-// --- Data management ---
-// On construit un chemin fiable vers le fichier JSON
-const initialReviewsPath = path.join(process.cwd(), 'api', 'mockReviews.json');
-const initialReviews = require(initialReviewsPath);
-
-// On construit un chemin fiable vers le fichier JSON
-const googleApiMockPath = path.join(process.cwd(), 'api', 'mockGoogleApiResponse.json');
-const googleApiMock = require(googleApiMockPath);
+// --- Data Management ---
+// On charge les fichiers JSON directement. Vercel les trouvera grâce à vercel.json.
+const initialReviews = require('./mockReviews.json');
+const googleApiMock = require('./mockGoogleApiResponse.json');
 
 let reviews = initialReviews.result.map(review => {
   const totalRating = review.reviewCategory.reduce((sum, cat) => sum + cat.rating, 0);
@@ -42,15 +35,12 @@ let reviews = initialReviews.result.map(review => {
 // --- Routes API ---
 app.get('/api/google-reviews/:listingName', (req, res) => {
   const listingName = req.params.listingName;
-
-  console.log(`[Backend] Recherche d'avis Google simulés pour : ${listingName}`);
-
-  const apiResponse = mockGoogleApiResponse[listingName];
+  const apiResponse = googleApiMock[listingName];
 
   if (apiResponse) {
     res.json(apiResponse);
   } else {
-    res.json(mockGoogleApiResponse.default);
+    res.json(googleApiMock.default);
   }
 });
 
@@ -66,7 +56,6 @@ app.post('/api/reviews/:id/approve', (req, res) => {
 
   if (reviewToUpdate) {
     reviewToUpdate.isApproved = isApproved;
-    console.log(`Review ${reviewId} status updated to: ${isApproved}`);
     res.status(200).json(reviewToUpdate);
   } else {
     res.status(404).json({ message: "Review not found" });
@@ -82,40 +71,27 @@ app.get('/api/reviews/public', (req, res) => {
   res.json(publicReviews);
 });
 
-// =================================================================
-// 4. Route for the showcase page (where the approved propreties)
-// =================================================================
 app.get('/api/showcase-properties', (req, res) => {
   try {
     const approvedReviews = reviews.filter(r => r.isApproved);
     const uniqueListingNames = [...new Set(approvedReviews.map(r => r.listingName))];
 
     const propertiesWithImages = uniqueListingNames.map(listingName => {
-      let imageUrl = 'assets/house1.jpg'; // random image
-
-      // Put image from the assets folder.
+      let imageUrl = 'assets/house1.jpg';
       if (listingName.includes('Shoreditch Heights')) {
         imageUrl = 'assets/house1.jpg';
       } else if (listingName.includes('Maple Street')) {
-        imageUrl = 'assets/house2.jpg';
+        imageUrl = 'assets-house2.jpg';
       } else if (listingName.includes('Oak Avenue')) {
         imageUrl = 'assets/house3.jpg';
       }
-
-      return {
-        listingName: listingName,
-        imageUrl: imageUrl
-      };
+      return { listingName: listingName, imageUrl: imageUrl };
     });
-
     res.json(propertiesWithImages);
-
   } catch (error) {
-    console.error("Erreur dans /api/showcase-properties:", error);
     res.status(500).json({ message: "Erreur interne du serveur" });
   }
 });
 
-
+// Exporte l'application pour Vercel
 module.exports = app;
-
