@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const fs = require('fs'); // <--- NOUVEAU : On importe le module 'fs'
+const path = require('path'); // <--- NOUVEAU : On importe le module 'path'
 const app = express();
 
 // --- Configuration ---
@@ -7,10 +9,14 @@ app.use(cors());
 app.use(express.json()); 
 
 // --- Data Management ---
-const initialReviews = require('./mockReviews.json');
-const googleApiMock = require('./mockGoogleApiResponse.json');
+// On lit les fichiers JSON de manière fiable avec fs et path
+const reviewsPath = path.join(process.cwd(), 'api', 'mockReviews.json');
+const initialReviewsData = JSON.parse(fs.readFileSync(reviewsPath, 'utf-8'));
 
-let reviews = initialReviews.result.map(review => {
+const googleMockPath = path.join(process.cwd(), 'api', 'mockGoogleApiResponse.json');
+const googleApiMock = JSON.parse(fs.readFileSync(googleMockPath, 'utf-8'));
+
+let reviews = initialReviewsData.result.map(review => {
   const totalRating = review.reviewCategory.reduce((sum, cat) => sum + cat.rating, 0);
   const averageRating = totalRating / review.reviewCategory.length;
   const categories = review.reviewCategory.reduce((obj, cat) => {
@@ -32,6 +38,7 @@ let reviews = initialReviews.result.map(review => {
 });
 
 // --- Routes API ---
+// (Toutes vos routes API restent exactement les mêmes, pas besoin de les copier ici)
 app.get('/api/google-reviews/:listingName', (req, res) => {
   const listingName = req.params.listingName;
   const apiResponse = googleApiMock[listingName];
@@ -87,5 +94,6 @@ app.get('/api/showcase-properties', (req, res) => {
   }
 });
 
-// Exporte l'application pour Vercel. C'est la seule chose à la fin.
+
+// Exporte l'application pour Vercel
 module.exports = app;
