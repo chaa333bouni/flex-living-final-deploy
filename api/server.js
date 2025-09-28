@@ -7,13 +7,9 @@ app.use(cors());
 app.use(express.json()); 
 
 // --- Data Management ---
-// On charge les fichiers JSON directement. Vercel les trouvera grâce à vercel.json.
 const initialReviews = require('./mockReviews.json');
 const googleApiMock = require('./mockGoogleApiResponse.json');
-const PORT = process.env.PORT || 3001; // Utilise le port de Vercel ou 3001 en local
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+
 let reviews = initialReviews.result.map(review => {
   const totalRating = review.reviewCategory.reduce((sum, cat) => sum + cat.rating, 0);
   const averageRating = totalRating / review.reviewCategory.length;
@@ -39,12 +35,7 @@ let reviews = initialReviews.result.map(review => {
 app.get('/api/google-reviews/:listingName', (req, res) => {
   const listingName = req.params.listingName;
   const apiResponse = googleApiMock[listingName];
-
-  if (apiResponse) {
-    res.json(apiResponse);
-  } else {
-    res.json(googleApiMock.default);
-  }
+  res.json(apiResponse || googleApiMock.default);
 });
 
 app.get('/api/reviews', (req, res) => {
@@ -84,7 +75,7 @@ app.get('/api/showcase-properties', (req, res) => {
       if (listingName.includes('Shoreditch Heights')) {
         imageUrl = 'assets/house1.jpg';
       } else if (listingName.includes('Maple Street')) {
-        imageUrl = 'assets-house2.jpg';
+        imageUrl = 'assets/house2.jpg'; // Correction de la faute de frappe
       } else if (listingName.includes('Oak Avenue')) {
         imageUrl = 'assets/house3.jpg';
       }
@@ -96,5 +87,8 @@ app.get('/api/showcase-properties', (req, res) => {
   }
 });
 
-// Exporte l'application pour Vercel
-module.exports = app;
+// --- Démarrage du Serveur ---
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
