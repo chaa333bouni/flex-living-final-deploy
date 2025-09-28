@@ -75,7 +75,7 @@ app.get('/api/showcase-properties', (req, res) => {
       if (listingName.includes('Shoreditch Heights')) {
         imageUrl = 'assets/house1.jpg';
       } else if (listingName.includes('Maple Street')) {
-        imageUrl = 'assets/house2.jpg'; // Correction de la faute de frappe
+        imageUrl = 'assets/house2.jpg';
       } else if (listingName.includes('Oak Avenue')) {
         imageUrl = 'assets/house3.jpg';
       }
@@ -87,8 +87,5 @@ app.get('/api/showcase-properties', (req, res) => {
   }
 });
 
-// --- Démarrage du Serveur ---
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Exporte l'application pour Vercel. C'est la seule chose à la fin.
+module.exports = app;
