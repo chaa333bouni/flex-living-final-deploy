@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs'; // IMPORTANT : Assurez-vous que 'map' est importé depuis 'rxjs'
+import { Observable, map } from 'rxjs';
 
 // Interface pour un avis Hostaway
 export interface Review {
@@ -13,16 +13,16 @@ export interface Review {
   overallRating: number;
   categories: any;
   isApproved: boolean;
-  [key: string]: any; // Pour la fonction de tri
+  [key: string]: any;
 }
 
-// Interface pour la page vitrine des propriétés
+// Interface pour la page vitrine
 export interface ShowcaseProperty {
   listingName: string;
   imageUrl: string;
 }
 
-// Interface pour la réponse complète de l'API Google (simulée )
+// Interface pour la réponse API Google
 export interface GoogleApiResponse {
   result: {
     reviews: GoogleReview[];
@@ -30,7 +30,7 @@ export interface GoogleApiResponse {
   status: string;
 }
 
-// Interface pour un seul avis Google
+// Interface pour un avis Google
 export interface GoogleReview {
   author_name: string;
   profile_photo_url: string;
@@ -41,25 +41,20 @@ export interface GoogleReview {
 
 @Injectable({
   providedIn: 'root'
-})
+} )
 export class ReviewService {
-
-
-// En ceci :
-private apiUrl = '/api';
+  // L'URL de base pour toutes les appels API.
+  private apiUrl = '/api';
 
   constructor(private http: HttpClient ) { }
 
-  // for dashboard manager
   getReviews(): Observable<Review[]> {
     return this.http.get<Review[]>(`${this.apiUrl}/reviews` );
   }
-  
 
   updateApprovalStatus(id: number, isApproved: boolean): Observable<Review> {
     return this.http.post<Review>(`${this.apiUrl}/reviews/${id}/approve`, { isApproved } );
   }
-
 
   getPublicReviewsForListing(listingName: string): Observable<Review[]> {
     return this.http.get<Review[]>(`${this.apiUrl}/reviews/public`, {
@@ -67,25 +62,17 @@ private apiUrl = '/api';
     } );
   }
 
-
   getShowcaseProperties(): Observable<ShowcaseProperty[]> {
     return this.http.get<ShowcaseProperty[]>(`${this.apiUrl}/showcase-properties` );
   }
- 
-  // =================================================================
-  // New method for simulated google reviews
-  // =================================================================
+
   getGoogleReviews(listingName: string): Observable<GoogleReview[]> {
-
     return this.http.get<GoogleApiResponse>(`${this.apiUrl}/google-reviews/${listingName}` ).pipe(
-      
-
       map(response => {
         if (response && response.status === 'OK' && response.result && response.result.reviews) {
-          return response.result.reviews; 
+          return response.result.reviews;
         }
-
-        return []; 
+        return [];
       })
     );
   }
